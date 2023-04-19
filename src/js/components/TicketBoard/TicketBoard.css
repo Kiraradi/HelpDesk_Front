@@ -1,0 +1,30 @@
+.bottons-container {
+    display: flex;
+    max-width: 100%;
+    width: 100%;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.addTicket-button {
+    height: 40px;
+    padding: 5px;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid #424242;
+    background-color: #ffff;
+    font-size: 18px;
+    cursor: pointer;
+    color: #424242;
+}
+
+.addTicket-button:hover {
+    background-color: #f3f3f3;
+}
+
+.ticket-list {
+    width: 100%;
+    background-color: #ffff;
+    height: 80px;
+    margin-top: 25px;
+}
