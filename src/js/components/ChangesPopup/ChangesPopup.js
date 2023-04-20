@@ -7,6 +7,8 @@ export default class ChangesPopup {
         this.detailedDescription = detailedDescription;
         this.cancelButtonCallback = this.cancelButtonCallback.bind(this);
         this.addButtonCallback = this.addButtonCallback.bind(this);
+        this.createTicketCollback = () => {};
+        this.changeTicketCollback = () => {};
     }
 
     drawUI() {
@@ -30,7 +32,16 @@ export default class ChangesPopup {
         popupFormEl.appendChild(this.getButtonsEl());
         this.popupEl.appendChild(popupFormEl);
 
-        
+        popupFormEl.addEventListener('submit', (e) => {
+            e.preventDefault();
+        });
+
+        this.popupEl.addEventListener('click', (e) => {
+            if (!e.target.closest('.popup-form')) {
+                this.cancelButtonCallback();
+            }
+        });
+
         this.container.appendChild(this.popupEl);
     }
 
@@ -84,6 +95,9 @@ export default class ChangesPopup {
     }
 
     addButtonCallback() {
-        this.popupEl.remove();
+        this.shortDescription = this.popupEl.querySelector('.input').value;
+        this.detailedDescription = this.popupEl.querySelector('.textarea').value;
+        this.createTicketCollback(this.shortDescription, this.detailedDescription); 
+        this.popupEl.remove();       
     }
 }

@@ -1,7 +1,7 @@
 
 .popup {
     background-color: rgba(122, 122, 122, 0.3);
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     top: 0;
     left: 0;
@@ -14,6 +14,7 @@
 
 .popup-form {
     width: 60%;
+    max-width: 580px;
     z-index: 900;
     left: 20%;
     top: 50%;

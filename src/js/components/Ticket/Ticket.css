@@ -1,0 +1,55 @@
+.ticket {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #424242;
+    background-color: #ffff;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-wraper {
+    flex-grow: 1;
+}
+
+.description-wraper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-grow: 7;
+}
+
+.creation-time {
+    flex-grow: 1;
+    display: flex;
+    justify-content: end;
+}
+.description, .creation-time {
+    font-size: 18px;
+    
+}
+
+.detailed-description {
+    display: none;
+}
+
+.buttons-wraper-ticket {
+    display: flex;
+    flex-grow: 1;
+    justify-content: end;
+    gap: 10px;
+}
+
+.close-button, .change-button, .checkbox-ticket {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkbox-ticket__active::after {
+    content: '✓';
+    font-size: 20px;
+    color: #424242;
+}
