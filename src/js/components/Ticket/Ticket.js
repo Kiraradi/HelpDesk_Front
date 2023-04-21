@@ -1,6 +1,7 @@
 import './Ticket.css'
 import RequestService from '../../services/requestService';
 import ChangesPopup from '../ChangesPopup/ChangesPopup';
+import DeletionPopup from '../DeletionPopup/DeletionPopup';
 export default class Ticket {
     constructor(container, ticket, isLoadedPage) {
         this.container = container;
@@ -19,7 +20,6 @@ export default class Ticket {
         this.ticketEl.appendChild(this.getButtonsEl());
 
         this.container.appendChild(this.ticketEl);
-        console.log(this.ticket)
         this.ticketEl.addEventListener('click', (e) => {
             if (e.target.closest('.button')) {
                 return;
@@ -104,9 +104,12 @@ export default class Ticket {
         });
 
         closeButton.addEventListener('click', (e) => {
-            const id = this.ticketEl.getAttribute('data-id');
-            RequestService.removeTaskOnServer(id);
-            this.ticketEl.remove();
+            //const id = this.ticketEl.getAttribute('data-id');
+            const helpDeskWrapperEl = document.querySelector('.helpDesk-wrapper');
+            /*RequestService.removeTaskOnServer(id);
+            this.ticketEl.remove();*/
+            const deletePopup = new DeletionPopup(helpDeskWrapperEl, this.ticketEl);
+            deletePopup.drawUI()
         });
 
         return buttonsWraper;
