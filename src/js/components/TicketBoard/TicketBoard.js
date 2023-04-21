@@ -5,9 +5,27 @@ import Ticket from "../Ticket/Ticket";
 
 export default class TicketBoard {
     constructor(container) {
+        this.isLoadedPage = false;
         this.container = container;
         this.addTicketCollback = this.addTicketCollback.bind(this);
         this.createTicketCollback = this.createTicketCollback.bind(this);
+        this.loadPage();
+    }
+
+    loadPage() {
+        RequestService.getTicketsWithServer().then(resolve => {
+            this.isLoadedPage = true;
+            const tickets = resolve;
+            this.drawUI()
+            if (tickets.length > 0) {
+                tickets.forEach(ticket => {
+                    this.createTicketCollback(ticket);
+                })
+                
+            }
+            this.isLoadedPage = false;
+        });
+        
     }
 
     drawUI() {
@@ -35,15 +53,21 @@ export default class TicketBoard {
     }
 
 
-    createTicketCollback(shortDescription, detailedDescription) {
-        
-        RequestService.addTicketOnServer(shortDescription, detailedDescription).then((resolve) => {
-            
+    createTicketCollback(ticket) {
+
+        if (this.isLoadedPage) {
+            const ticketEl = new Ticket(this.ticketList, ticket);
+            ticketEl.removeTaskOnServerCallback = this.removeTaskOnServerCallback;
+            ticketEl.changeTicketOnServerCallback = this.changeTicketOnServerCallback;
+            ticketEl.drawUI(); 
+        } else {
+            RequestService.addTicketOnServer(ticket.name, ticket.description).then((resolve) => {
             const ticketEl = new Ticket(this.ticketList, resolve);
             ticketEl.removeTaskOnServerCallback = this.removeTaskOnServerCallback;
             ticketEl.changeTicketOnServerCallback = this.changeTicketOnServerCallback;
             ticketEl.drawUI();
         });
+        }        
 
     }
 

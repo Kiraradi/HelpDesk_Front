@@ -108,9 +108,10 @@ export default class ChangesPopup {
     }
 
     addButtonCallback() {
-        this.shortDescription = this.popupEl.querySelector('.input').value;
-        this.detailedDescription = this.popupEl.querySelector('.textarea').value;
-        this.createTicketCollback(this.shortDescription, this.detailedDescription); 
+        this.ticket.name = this.popupEl.querySelector('.input').value;
+        this.ticket.description = this.popupEl.querySelector('.textarea').value
+        
+        this.createTicketCollback(this.ticket); 
         this.popupEl.remove();       
     }
 }

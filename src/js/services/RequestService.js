@@ -4,6 +4,16 @@ export default class RequestService {
 
     }
 
+    static async getTicketsWithServer() {
+        let response = await fetch(`${SERVERURL}?method=allTickets`, {
+            method: 'GET',
+        });
+
+        let result = await response.json();
+        
+        return result;
+    }
+
     static async addTicketOnServer(shortDescription, detailedDescription) {
         const ticket = {
             shortDescription,

@@ -2,9 +2,10 @@ import './Ticket.css'
 import RequestService from '../../services/requestService';
 import ChangesPopup from '../ChangesPopup/ChangesPopup';
 export default class Ticket {
-    constructor(container, ticket) {
+    constructor(container, ticket, isLoadedPage) {
         this.container = container;
         this.ticket = ticket;
+        this.isLoadedPage = isLoadedPage;
         this.changeTicketCallback = this.changeTicketCallback.bind(this);
     }
 
@@ -65,7 +66,7 @@ export default class Ticket {
 
         this.detailedDescription = document.createElement('div');
         this.detailedDescription.classList.add('detailed-description', 'description');
-        this.detailedDescription.textContent = this.ticket.description;
+        this.detailedDescription.innerHTML = this.ticket.description.replace(/\n/g,'<br>');
         this.descriptionWraperEl.appendChild(this.detailedDescription);
 
         return  this.descriptionWraperEl;
@@ -114,6 +115,6 @@ export default class Ticket {
     changeTicketCallback(ticket) {
         this.ticket = ticket;
         this.shortDescription.textContent = this.ticket.name;
-        this.detailedDescription.textContent = this.ticket.description;
+        this.detailedDescription.innerHTML = this.ticket.description.replace(/\n/g,'<br>');
     }
 }
