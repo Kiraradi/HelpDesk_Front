@@ -4,7 +4,7 @@
     border: 1px solid #424242;
     background-color: #ffff;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .checkbox-wraper {
@@ -22,14 +22,29 @@
     flex-grow: 1;
     display: flex;
     justify-content: end;
+    margin-top: 10px;
 }
 .description, .creation-time {
     font-size: 18px;
     
 }
 
+.description-wraper {
+    position: relative;
+    margin-top: 10px;
+}
+
 .detailed-description {
     display: none;
+    position: absolute;
+    left: 0;
+    top: 22px
+}
+
+.detailed-description__active {
+    display: block;
+    padding: 15px 0;
+
 }
 
 .buttons-wraper-ticket {

@@ -34,12 +34,6 @@ export default class TicketBoard {
         changesPopup.drawUI();
     }
 
-    changeTicket(ticket) {
-        const changesPopup = new ChangesPopup(this.container, true, ticket);
-        changesPopup.createTicketCollback = this.createTicketCollback;
-        changesPopup.changeTicketOnServerCallback = this.changeTicketOnServerCallback;
-
-    }
 
     createTicketCollback(shortDescription, detailedDescription) {
         

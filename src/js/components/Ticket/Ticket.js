@@ -4,7 +4,8 @@ import ChangesPopup from '../ChangesPopup/ChangesPopup';
 export default class Ticket {
     constructor(container, ticket) {
         this.container = container;
-        this.ticket = ticket;        
+        this.ticket = ticket;
+        this.changeTicketCallback = this.changeTicketCallback.bind(this);
     }
 
     drawUI() {
@@ -18,6 +19,22 @@ export default class Ticket {
 
         this.container.appendChild(this.ticketEl);
         console.log(this.ticket)
+        this.ticketEl.addEventListener('click', (e) => {
+            if (e.target.closest('.button')) {
+                return;
+            }
+
+            if (!this.detailedDescription.classList.contains('detailed-description__active')) {
+                this.detailedDescription.classList.add('detailed-description__active');
+                let height = this.descriptionWraperEl.getBoundingClientRect().height;
+                height = height + this.detailedDescription.getBoundingClientRect().height;
+                this.descriptionWraperEl.style.height = `${height}px`;
+            } else {
+                this.detailedDescription.classList.remove('detailed-description__active');
+                this.descriptionWraperEl.style = '';
+            }
+            
+        });
     }
 
     getCheckboxEl() {
@@ -38,20 +55,20 @@ export default class Ticket {
     }
 
     getDescriptionEl() {
-        const descriptionWraperEl = document.createElement('div');
-        descriptionWraperEl.classList.add('description-wraper');
+        this.descriptionWraperEl = document.createElement('div');
+        this.descriptionWraperEl.classList.add('description-wraper');
 
-        const shortDescription = document.createElement('div');
-        shortDescription.classList.add('short-description', 'description');
-        shortDescription.textContent = this.ticket.name;
-        descriptionWraperEl.appendChild(shortDescription);
+        this.shortDescription = document.createElement('div');
+        this.shortDescription.classList.add('short-description', 'description');
+        this.shortDescription.textContent = this.ticket.name;
+        this.descriptionWraperEl.appendChild(this.shortDescription);
 
-        const detailedDescription = document.createElement('div');
-        detailedDescription.classList.add('detailed-description', 'description');
-        detailedDescription.textContent = this.ticket.description;
-        descriptionWraperEl.appendChild(detailedDescription);
+        this.detailedDescription = document.createElement('div');
+        this.detailedDescription.classList.add('detailed-description', 'description');
+        this.detailedDescription.textContent = this.ticket.description;
+        this.descriptionWraperEl.appendChild(this.detailedDescription);
 
-        return descriptionWraperEl;
+        return  this.descriptionWraperEl;
     }
 
     getCreationTimeEl() {
@@ -79,7 +96,10 @@ export default class Ticket {
         buttonsWraper.appendChild(closeButton);
 
         changeButton.addEventListener('click', e => {
-             
+            const helpDeskWrapperEl = document.querySelector('.helpDesk-wrapper');
+             const changesPopup = new ChangesPopup(helpDeskWrapperEl, false, this.ticket);
+             changesPopup.changeTicketCallback = this.changeTicketCallback;
+             changesPopup.drawUI();
         });
 
         closeButton.addEventListener('click', (e) => {
@@ -89,5 +109,11 @@ export default class Ticket {
         });
 
         return buttonsWraper;
+    }
+
+    changeTicketCallback(ticket) {
+        this.ticket = ticket;
+        this.shortDescription.textContent = this.ticket.name;
+        this.detailedDescription.textContent = this.ticket.description;
     }
 }

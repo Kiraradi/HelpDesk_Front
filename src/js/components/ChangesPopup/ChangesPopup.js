@@ -1,4 +1,5 @@
 import "./ChangesPopup.css";
+import RequestService from "../../services/requestService";
 export default class ChangesPopup {
     constructor(container, isTickedAdded, ticket = {name: '', description: ''}) {
         this.container = container;
@@ -7,6 +8,7 @@ export default class ChangesPopup {
         this.cancelButtonCallback = this.cancelButtonCallback.bind(this);
         this.addButtonCallback = this.addButtonCallback.bind(this);
         this.createTicketCollback = () => {};
+        this.changeTicketCallback = () => {};
     }
 
     drawUI() {
@@ -84,7 +86,20 @@ export default class ChangesPopup {
         buttonsWraper.appendChild(addButton);
 
         cancelButton.addEventListener('click', this.cancelButtonCallback);
-        addButton.addEventListener('click', this.addButtonCallback);
+        addButton.addEventListener('click', () => {
+            if (this.isTickedAdded) {
+                this.addButtonCallback();
+            } else {
+                const ticketName = this.popupEl.querySelector('.input').value;
+                const ticketDescription = this.popupEl.querySelector('.textarea').value;
+                this.ticket.name = ticketName;
+                this.ticket.description = ticketDescription;
+                RequestService.changeTicketOnServer(this.ticket);
+                this.changeTicketCallback(this.ticket);
+                this.popupEl.remove();
+            }
+            
+        });
         return buttonsWraper;
     }
 
