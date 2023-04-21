@@ -1,9 +1,10 @@
 import './Ticket.css'
+import RequestService from '../../services/requestService';
+import ChangesPopup from '../ChangesPopup/ChangesPopup';
 export default class Ticket {
     constructor(container, ticket) {
         this.container = container;
-        this.ticket = ticket;
-        this.removeTaskOnServerCallback = () => {};
+        this.ticket = ticket;        
     }
 
     drawUI() {
@@ -29,6 +30,8 @@ export default class Ticket {
 
         checkboxEl.addEventListener('click', () => {
             checkboxEl.classList.toggle('checkbox-ticket__active');
+            this.ticket.status = !this.ticket.status;
+            RequestService.changeTicketOnServer(this.ticket);
         })
 
         return checkboxWraperEl;
@@ -75,9 +78,13 @@ export default class Ticket {
 
         buttonsWraper.appendChild(closeButton);
 
+        changeButton.addEventListener('click', e => {
+             
+        });
+
         closeButton.addEventListener('click', (e) => {
-            const id = this.ticketEl.getAttribute('data-id')
-            this.removeTaskOnServerCallback(id);
+            const id = this.ticketEl.getAttribute('data-id');
+            RequestService.removeTaskOnServer(id);
             this.ticketEl.remove();
         });
 

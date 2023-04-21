@@ -1,14 +1,12 @@
 import "./ChangesPopup.css";
 export default class ChangesPopup {
-    constructor(container, isTickedAdded, shortDescription = '', detailedDescription = '') {
+    constructor(container, isTickedAdded, ticket = {name: '', description: ''}) {
         this.container = container;
         this.isTickedAdded = isTickedAdded;
-        this.shortDescription = shortDescription;
-        this.detailedDescription = detailedDescription;
+        this.ticket = ticket;
         this.cancelButtonCallback = this.cancelButtonCallback.bind(this);
         this.addButtonCallback = this.addButtonCallback.bind(this);
         this.createTicketCollback = () => {};
-        this.changeTicketCollback = () => {};
     }
 
     drawUI() {
@@ -57,13 +55,13 @@ export default class ChangesPopup {
             inputTitle.textContent = 'Краткое описание';
             inputEl = document.createElement('input');
             inputEl.classList.add('input');
-            inputEl.value = this.shortDescription;
+            inputEl.value = this.ticket.name;
 
         } else {
             inputTitle.textContent = 'Подробное описание';
             inputEl = document.createElement('textarea');
             inputEl.classList.add('textarea');
-            inputEl.value = this.detailedDescription;
+            inputEl.value = this.ticket.description;
         }
         inputWraper.appendChild(inputTitle);
         inputWraper.appendChild(inputEl);
