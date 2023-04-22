@@ -46,6 +46,10 @@ export default class Ticket {
         checkboxEl.classList.add('checkbox-ticket', 'button');
         checkboxWraperEl.appendChild(checkboxEl);
 
+        if (this.isLoadedPage && this.ticket.status) {
+            checkboxEl.classList.add('checkbox-ticket__active');
+        }
+
         checkboxEl.addEventListener('click', () => {
             checkboxEl.classList.toggle('checkbox-ticket__active');
             this.ticket.status = !this.ticket.status;

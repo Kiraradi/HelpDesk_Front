@@ -56,13 +56,13 @@ export default class TicketBoard {
     createTicketCollback(ticket) {
 
         if (this.isLoadedPage) {
-            const ticketEl = new Ticket(this.ticketList, ticket);
+            const ticketEl = new Ticket(this.ticketList, ticket, this.isLoadedPage);
             ticketEl.removeTaskOnServerCallback = this.removeTaskOnServerCallback;
             ticketEl.changeTicketOnServerCallback = this.changeTicketOnServerCallback;
             ticketEl.drawUI(); 
         } else {
             RequestService.addTicketOnServer(ticket.name, ticket.description).then((resolve) => {
-            const ticketEl = new Ticket(this.ticketList, resolve);
+            const ticketEl = new Ticket(this.ticketList, resolve, this.isLoadedPage);
             ticketEl.removeTaskOnServerCallback = this.removeTaskOnServerCallback;
             ticketEl.changeTicketOnServerCallback = this.changeTicketOnServerCallback;
             ticketEl.drawUI();
