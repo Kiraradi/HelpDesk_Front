@@ -4,3 +4,4 @@ doc
 webpack.*.js
 keep-data-cache
 e2e
+RequestService.js
