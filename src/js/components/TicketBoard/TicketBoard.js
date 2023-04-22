@@ -47,9 +47,15 @@ export default class TicketBoard {
     }
 
     addTicketCollback(e) {
-        const changesPopup = new ChangesPopup(this.container, true);
-        changesPopup.createTicketCollback = this.createTicketCollback
-        changesPopup.drawUI();
+        e.preventDefault();
+        const isOpenPopup = this.container.querySelector('.popup');
+        
+        if (!isOpenPopup) {
+           this.changesPopup = new ChangesPopup(this.container, true);
+            this.changesPopup.createTicketCollback = this.createTicketCollback
+            this.changesPopup.drawUI(); 
+        }
+        
     }
 
 

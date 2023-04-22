@@ -101,19 +101,24 @@ export default class Ticket {
         buttonsWraper.appendChild(closeButton);
 
         changeButton.addEventListener('click', e => {
-            const helpDeskWrapperEl = document.querySelector('.helpDesk-wrapper');
-             const changesPopup = new ChangesPopup(helpDeskWrapperEl, false, this.ticket);
-             changesPopup.changeTicketCallback = this.changeTicketCallback;
-             changesPopup.drawUI();
+            const isOpenPopup = document.querySelector('.popup');
+            if (!isOpenPopup) {
+                const helpDeskWrapperEl = document.querySelector('.helpDesk-wrapper');
+                const changesPopup = new ChangesPopup(helpDeskWrapperEl, false, this.ticket);
+                changesPopup.changeTicketCallback = this.changeTicketCallback;
+                changesPopup.drawUI();
+            }
         });
 
         closeButton.addEventListener('click', (e) => {
-            //const id = this.ticketEl.getAttribute('data-id');
-            const helpDeskWrapperEl = document.querySelector('.helpDesk-wrapper');
-            /*RequestService.removeTaskOnServer(id);
-            this.ticketEl.remove();*/
-            const deletePopup = new DeletionPopup(helpDeskWrapperEl, this.ticketEl);
-            deletePopup.drawUI()
+            const isOpenPopup = document.querySelector('.popup');
+            if (!isOpenPopup) {
+                const helpDeskWrapperEl = document.querySelector('.helpDesk-wrapper');
+            
+                const deletePopup = new DeletionPopup(helpDeskWrapperEl, this.ticketEl);
+                deletePopup.drawUI()  
+            }
+            
         });
 
         return buttonsWraper;
